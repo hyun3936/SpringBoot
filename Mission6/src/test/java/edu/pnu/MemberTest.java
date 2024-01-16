@@ -25,7 +25,7 @@ public class MemberTest {
 	@Order(1)
 	@DisplayName("데이터 입력")
 	public void testInsertMember() {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 1; i < 6; i++) {
 		memberRepo.save(Member.builder()
 				.id(i)
 				.name("이름" + i)
@@ -45,27 +45,27 @@ public class MemberTest {
 //		이렇게 쓸려면 bulid를 없애야 됨.
 //	}
 	
-	@Test
-	@Order(2)
-	@DisplayName("검색")
-	public void testGetMember() {
-		Member member = memberRepo.findById(1).get();
-		System.out.println(member.toString());
-	}
-	
-	@Test
-	@Order(3)
-	@DisplayName("수정")
-	public void testUpdateMember() {
-		System.out.println("=== 1번 게시글 조회 ===");
-		Member member = memberRepo.findById(1).get();
-		
-		System.out.println("=== 1번 이름 수정 ===");
-		member.setName("이름을 수정했습니다.");
-		memberRepo.save(member);
-	}
-
-	
+//	@Test
+//	@Order(2)
+//	@DisplayName("검색")
+//	public void testGetMember() {
+//		Member member = memberRepo.findById(1).get();
+//		System.out.println(member.toString());
+//	}
+//	
+//	@Test
+//	@Order(3)
+//	@DisplayName("수정")
+//	public void testUpdateMember() {
+//		System.out.println("=== 1번 게시글 조회 ===".repeat(5));
+//		Member member = memberRepo.findById(4).get(); // 수정할 인덱스
+//		
+//		System.out.println("=== 1번 이름 수정 ===".repeat(5));
+//		member.setName("이름55"); // 수정할 이름
+//		memberRepo.save(member);
+//	}
+//
+//	
 //	
 //	@Test
 //	@Order(4)
@@ -73,7 +73,7 @@ public class MemberTest {
 //	public void testDeleteMemeber() {
 //		memberRepo.deleteById(1);
 //	}
-	
+//	
 	
 	
 	
