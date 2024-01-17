@@ -4,7 +4,8 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,12 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Member {
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private String name;
 	private String pass;
-	private Date regidate;
+	@Builder.Default
+	private String role = "USER";
+	@Builder.Default
+	private Date regidate = new Date();
 }
