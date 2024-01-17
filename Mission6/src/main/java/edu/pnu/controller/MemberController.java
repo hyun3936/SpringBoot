@@ -2,8 +2,11 @@ package edu.pnu.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +32,7 @@ public class MemberController {
  * 기본형 데이터 타입 : int, short, long, double, float, char, byte, boolean
  * 참조형 데이터 타입 : Integer, Short, Long, Double, Float, Char, Byte, Boolean
  * 
- 	1.public ResponseEntity<?> getMember(int id)
+ 	1.public ResponseEntity<?> getMember(int id) --> 이렇게 하면 안됨. 터짐. null이 없음.
  	2.public ResponseEntity<?> getMember(Integer id)
 		==> @GetMapping("/member")
  		==> http://localhost:8080/member?id=3 ==> 파라미터로 데이터를 받는다.
@@ -61,16 +64,26 @@ public class MemberController {
 	public ResponseEntity<?> addMember(@RequestBody Member member) {
 		return ResponseEntity.ok(memberService.add(member));
 	}
-//	
+	
+	@PutMapping("/member")
+	public ResponseEntity<?> updateMembers(@RequestBody Member member) {
+		return ResponseEntity.ok(memberService.update(member));
+	}
+	
+	
+	
+	
 //	@PutMapping("/member")
-//	public int updateMembers(Member member) {
-//		Member m = getMember(member);
-//		if(m == null) return 0;
+//	public ResponseEntity<?> updateMembers(Member member) {
+//		Member m = memberService.getMember(member.getId());
+//		if(m == null) return null;
 //		m.setName(member.getName());
-//		m.setPass(member.getName());
-//		return 1;
+//		m.setPass(member.getPass());
+//		return null;
 //	}
-//	
+	
+	
+	
 //	@DeleteMapping("/member/{id}") // 파라미터로 받아서 하는 방법
 //	public int removeMember(@PathVariable Integer id) {
 //		Member m = getMember(id);
@@ -82,5 +95,11 @@ public class MemberController {
 //		
 //		return 1;
 //	}
+	
+	
+	@DeleteMapping("/member/{id}") // 파라미터로 받아서 하는 방법
+	public ResponseEntity<?> deleteMember(@PathVariable Integer id) {
+		return ResponseEntity.ok(memberService.delete(id));
+	}
 	
 }

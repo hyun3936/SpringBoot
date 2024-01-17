@@ -1,3 +1,7 @@
+// 기본 데이터 생성
+// ApplicationRunner : 서버를 종료하고 다시 실행하면 한번은 실행
+
+
 package edu.pnu;
 
 import java.util.Date;
