@@ -1,4 +1,5 @@
 // 로그인 기능을 구현
+// Authentication 인증
 
 package edu.pnu.config.filter;
 
@@ -62,7 +63,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// 인증 결과 생성된 Authentication 객체에서 필요한 정보를 읽어서 토큰을 만들어 헤더에 추가한다. 
 		User user = (User)authResult.getPrincipal();
 		String token = JWT.create()
-							.withExpiresAt(new Date(System.currentTimeMillis()+1000*60*10)) // 1000이 있으면 m/s 이코드에선 10분
+							.withExpiresAt(new Date(System.currentTimeMillis()+1000*60*60*24)) // 1000이 있으면 m/s 이코드에선 하루24시간
 							.withClaim("username", user.getUsername())
 							.sign(Algorithm.HMAC256("edu.pnu.jwt")); 
 		response.addHeader("Authorization", "Bearer " + token);

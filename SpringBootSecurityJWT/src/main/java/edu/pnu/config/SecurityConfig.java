@@ -15,7 +15,10 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import edu.pnu.config.filter.JWTAuthenticationFilter;
 import edu.pnu.config.filter.JWTAuthorizationFilter;
 import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
 
+
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -26,11 +29,10 @@ public class SecurityConfig {
 	@Autowired
 	private MemberRepository memberRepository;
 	
+	@Autowired
+	private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -60,6 +62,19 @@ public class SecurityConfig {
 		
 		
 		
+		// 구글 로그인을 실행하면 DefaultOAuth2UserService가 실행됨.
+		// 로그인에 성공했을 때 추가적인 작업이 필요하면 DefaultOAuth2UserService를 상속한 클래스의 loadUser 메소드에서 하면 됨.
+		
+//		http.oauth2Login(oauth2->oauth2
+//				.loginPage("/login")
+//				.defaultSuccessUrl("/loginSuccess", true)
+//				);
+		
+		
+		http.oauth2Login(oauth2->oauth2.successHandler(customOAuth2SuccessHandler));
+		
+
 		return http.build();
 	}
+	
 }

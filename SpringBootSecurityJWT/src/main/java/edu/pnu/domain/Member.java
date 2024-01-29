@@ -22,7 +22,7 @@ public class Member {
 	@Id
 	private String username;
 	private String password;
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) // 해당 열거형 상수를 문자열로 데이터베이스에 저장하도록 지정하는 옵션
 	private Role role;
 	private boolean enabled;
 }

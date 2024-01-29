@@ -1,4 +1,4 @@
-package edu.pnu.config.filter;
+package edu.pnu.config.filter;	//Authorization 인가
 
 import java.io.IOException;
 import java.util.Optional;
@@ -30,16 +30,17 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		
 		String srcToken = request.getHeader("Authorization"); // 요청 헤더에서 Authorization을 얻어온다.
 		
 		if(srcToken == null || !srcToken.startsWith("Bearer ")) { // 없거나 "Bearer "로 시작하지 않는다면
-		filterChain.doFilter(request, response);				 // 필터를 그냥 통과	
-		return;
+			filterChain.doFilter(request, response);				 // 필터를 그냥 통과	
+			return;
 		}
 		String jwtToken = srcToken.replace("Bearer ", ""); //  토큰에서 "Bearer "를 제거
 		
 		// 토큰에서 username 추출
-		String username = JWT.require(Algorithm.HMAC256("edu.pnu.jwt")).build().verify(jwtToken).getClaim("uername").asString();
+		String username = JWT.require(Algorithm.HMAC256("edu.pnu.jwt")).build().verify(jwtToken).getClaim("username").asString();
 		
 		Optional<Member> opt = memberRepository.findById(username); // 토큰에서 얻은 username으로 DB를 검색해서 사용자를 검색
 		if (!opt.isPresent()) {
